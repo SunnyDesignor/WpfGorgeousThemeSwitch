@@ -1,0 +1,37 @@
+﻿<Window x:Class="AreaDesignWpfControls.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:AreaDesignWpfControls" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="MainWindow" Width="800" Height="450"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ToggleButtonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="CheckBox" BasedOn="{StaticResource ToggleButtonSwitchStyle}">
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+                <Setter Property="Margin" Value="3" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="grid" Background="{DynamicResource BackgroundBrush}">
+        <ToggleButton x:Name="toggleButton" HorizontalAlignment="Center" Height="100" Margin="100,0,0,0" FontSize="32"
+                      local:ToggleButtonAttach.IsAutoFold="{Binding IsChecked, ElementName=checkBox}"
+                      Checked="ToggleButton_Checked" Content="切换深色"
+                      Style="{StaticResource ToggleButtonGorgeousThemeSwitchStyle}"
+                      Unchecked="ToggleButton_Checked" />
+
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20">
+            <TextBlock Text="设置" FontSize="24" ToolTip="使用示例" />
+            <CheckBox Name="checkBox" Content="自动折叠按钮" />
+            <CheckBox Content="切换主题" Margin="3"
+                      IsChecked="{Binding IsChecked, ElementName=toggleButton}"
+                      Style="{StaticResource ToggleButtonGorgeousThemeSwitchStyle}" />
+            <CheckBox Content="设置3..." />
+            <CheckBox Content="设置4..." IsChecked="True" />
+            <CheckBox Content="设置5..." />
+        </StackPanel>
+    </Grid>
+</Window>
