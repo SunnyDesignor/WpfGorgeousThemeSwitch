@@ -1,15 +1,7 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AreaDesignWpfControls
 {
@@ -40,37 +32,16 @@ namespace AreaDesignWpfControls
 
         private void SwitchToDarkTheme()
         {
-            ResBrushBeginAnimation("BackgroundBrush", (Color)ColorConverter.ConvertFromString("#FF1C1C1C"));
-            ResBrushBeginAnimation("PrimaryTextBrush", Colors.White);
+            AnimationHelper.ResBrushBeginAnimation("BackgroundBrush", (Color)ColorConverter.ConvertFromString("#FF1C1C1C"));
+            AnimationHelper.ResBrushBeginAnimation("PrimaryTextBrush", Colors.White);
+            NativeMethods.SetWindowFrameTheme(new WindowInteropHelper(this).Handle, true);
         }
 
         private void SwitchToLightTheme()
         {
-            ResBrushBeginAnimation("BackgroundBrush", Colors.White);
-            ResBrushBeginAnimation("PrimaryTextBrush", Colors.Black);
-        }
-
-        private void ResBrushBeginAnimation(string key, Color toColor, int durationMs = 600)
-        {
-            if (FindResource(key) is SolidColorBrush brush)
-            {
-                bool isNewBrush = false;
-                if (brush.IsFrozen)
-                {
-                    brush = new SolidColorBrush(brush.Color);
-                    isNewBrush = true;
-                }
-                ColorAnimation colorAnimation = new ColorAnimation
-                {
-                    From = brush.Color,
-                    To = toColor,
-                    Duration = TimeSpan.FromMilliseconds(durationMs),
-                    EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut },
-                };
-                brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
-                if (isNewBrush)
-                    Resources[key] = brush;
-            }
+            AnimationHelper.ResBrushBeginAnimation("BackgroundBrush", Colors.White);
+            AnimationHelper.ResBrushBeginAnimation("PrimaryTextBrush", Colors.Black);
+            NativeMethods.SetWindowFrameTheme(new WindowInteropHelper(this).Handle, false);
         }
 
     }

@@ -9,4 +9,7 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+  </ItemGroup>
+
 </Project>
